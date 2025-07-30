@@ -50,6 +50,8 @@
 #include <hoot/core/util/Validate.h>
 #include <hoot/core/visitors/ConstElementVisitor.h>
 
+#include <typeinfo>
+
 // Qt
 #include <QTextStream>
 
@@ -895,6 +897,7 @@ void OsmMap::visitRw(ElementVisitor& visitor)
 
 void OsmMap::visitNodesRw(ElementVisitor& visitor)
 {
+  LOG_INFO(typeid(visitor).name());
   OsmMapConsumer* consumer = dynamic_cast<OsmMapConsumer*>(&visitor);
   if (consumer != nullptr)
     consumer->setOsmMap(this);

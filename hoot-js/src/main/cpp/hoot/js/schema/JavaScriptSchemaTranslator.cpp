@@ -46,6 +46,11 @@
 #include <hoot/js/io/DataConvertJs.h>
 #include <hoot/js/util/HootExceptionJs.h>
 
+#include <execinfo.h> // For backtrace and backtrace_symbols
+#include <iostream>
+#include <exception> // For std::exception
+#include <string> // For std::string
+#include <cstdlib>
 // Qt
 #include <QCoreApplication>
 #include <QCryptographicHash>
@@ -197,6 +202,8 @@ void JavaScriptSchemaTranslator::_init()
   HandleScope handleScope(current);
   Context::Scope context_scope(_gContext->getContext(current));
   Local<Context> context = current->GetCurrentContext();
+
+  //LOG_INFO("\n\n\n" << to_string(&context) << "\n\n\n")
 
   if (_scriptPath.isEmpty())
   {
@@ -786,6 +793,37 @@ void JavaScriptSchemaTranslator::_translateToOsm(Tags& tags, const char* layerNa
   LOG_VART(layerName);
   LOG_VART(geomType);
 
+  //for(int i=0; i<tags->getLength(); i++) {
+  //  LOG_INFO(tags[i])
+  //}
+  //LOG_INFO(to_string(tags));
+  //LOG_INFO(std::stacktrace::current() << '\n');
+  //LOG_INFO("about to log layerName");
+  //LOG_INFO("layername: " + layerName[5000000]);
+  /*
+  try {
+    throw std::runtime_error("Something went wrong!");
+  }
+  catch (const std::runtime_error& e) { // Catching a specific exception type
+        LOG_INFO("Caught an exception: " + std::string(e.what())); 
+  }
+*/
+/*
+  void *callstack[64];
+  int frames = backtrace(callstack, 64);   // Get the raw stack trace addresses
+  char **symbols = backtrace_symbols(callstack, frames); // Convert addresses to symbolic names
+
+  //std::cerr << "Stack Trace (" << frames << " frames):" << std::endl;
+  LOG_INFO("Stack Trace (" + std::to_string(frames) + " frames):");
+  for (int i = 0; i < frames; ++i)
+  {
+    //std::cerr << "  " << symbols[i] << std::endl;
+    LOG_INFO(std::string(symbols[i]));
+  }
+
+  free(symbols); // backtrace_symbols() allocates memory that needs to be freed
+*/
+
   Isolate* current = v8::Isolate::GetCurrent();
   HandleScope handleScope(current);
   Context::Scope context_scope(_gContext->getContext(current));
@@ -794,8 +832,8 @@ void JavaScriptSchemaTranslator::_translateToOsm(Tags& tags, const char* layerNa
   Local<Object> v8Tags = Object::New(current);
   for (auto it = tags.begin(); it != tags.end(); ++it)
   {
-    LOG_VART(it.key());
-    LOG_VART(it.value());
+    //LOG_INFO(it.key());
+    //LOG_INFO(it.value());
     v8Tags->Set(context, toV8(it.key()), toV8(it.value()));
   }
 

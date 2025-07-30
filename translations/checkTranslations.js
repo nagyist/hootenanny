@@ -112,6 +112,9 @@ function schemaFromFcode(F_CODE,geometry,schema)
 
 function osmToOgr(feature,schema)
 {
+  //console.log('\nfeature, schema args we call handleInputs (invoke server) with')
+  //console.log(JSON.stringify(feature))
+  //console.log(JSON.stringify(schema))
   try {
     var ogrXML = server.handleInputs({
       osm: feature,

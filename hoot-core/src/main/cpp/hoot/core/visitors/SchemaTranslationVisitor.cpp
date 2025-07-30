@@ -103,6 +103,9 @@ void SchemaTranslationVisitor::visit(const ElementPtr& e)
       (_elementStatusFilter == Status::Invalid || e->getStatus() == _elementStatusFilter))
   {
     Tags& tags = e->getTags();
+    //LOG_INFO("Tags after grabbing from ElementPtr: " << tags)
+    //abort();
+    //assert(false);
 
     GeometryTypeId gtype = ElementToGeometryConverter::getGeometryType(e, false);
     // If we don't know what it is, no point in translating it.
@@ -153,6 +156,7 @@ void SchemaTranslationVisitor::visit(const ElementPtr& e)
         throw InternalErrorException("Unexpected geometry type.");
       }
 
+      LOG_INFO("called from schematranslatorvisitor")
       _translator->translateToOsm(tags, layerName.data(), geomType);
 
       // Arbitrarily pick the first error tag found. If the element has both, the last one parsed

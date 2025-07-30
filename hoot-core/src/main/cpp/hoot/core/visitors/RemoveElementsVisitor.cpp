@@ -98,7 +98,8 @@ void RemoveElementsVisitor::visit(const ElementPtr& e)
   if (_criteria.empty())
     throw IllegalArgumentException("No criteria specified for RemoveElementsVisitor.");
 
-  LOG_VART(e->getElementId());
+  LOG_INFO(e->getElementId());
+  LOG_INFO(e->getTags());
 
   if (_criteriaSatisfied(e))
   {

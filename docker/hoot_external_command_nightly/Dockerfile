@@ -11,9 +11,16 @@ ENV container=docker
 ENV LANG=en_US.UTF-8 
 ENV LC_ALL=en_US.UTF-8
 
+RUN sed -i s/mirror.centos.org/vault.centos.org/g /etc/yum.repos.d/*.repo && \
+    sed -i s/^#.*baseurl=http/baseurl=http/g /etc/yum.repos.d/*.repo && \
+    sed -i s/^mirrorlist=http/#mirrorlist=http/g /etc/yum.repos.d/*.repo
+
 RUN yum install -y wget curl sudo vim yum-utils epel-release && \
- yum-config-manager --add-repo https://hoot-repo.s3.amazonaws.com/el7/master/hoot.repo && \
- yum-config-manager --add-repo https://geoint-deps.s3.amazonaws.com/el7/stable/geoint-deps.repo
+    sed -i s/mirror.centos.org/vault.centos.org/g /etc/yum.repos.d/*.repo && \
+    sed -i s/^#.*baseurl=http/baseurl=http/g /etc/yum.repos.d/*.repo && \
+    sed -i s/^mirrorlist=http/#mirrorlist=http/g /etc/yum.repos.d/*.repo && \
+    yum-config-manager --add-repo https://hoot-repo.s3.amazonaws.com/el7/master/hoot.repo && \
+    yum-config-manager --add-repo https://geoint-deps.s3.amazonaws.com/el7/stable/geoint-deps.repo
 
 # Installing this to make sure that the one in the Postgresql repo DOES NOT get installed
 RUN yum install -y CGAL

@@ -251,7 +251,7 @@ import hoot.services.models.db.Users;
                 tokenResponse = doTokenRequest(code);
             } catch (RestClientException e) {
                 String msg = "Failed to retrieve access token from OAuth provider";
-                logger.error(msg);
+                logger.error(msg, e);
                 return Response.status(Response.Status.BAD_GATEWAY).entity(msg).build();
             }
 

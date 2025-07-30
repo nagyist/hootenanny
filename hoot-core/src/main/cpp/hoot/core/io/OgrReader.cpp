@@ -1208,7 +1208,7 @@ void OgrReaderInternal::_translate(Tags& t)
     default:                      throw HootException("Translate: Unsupported geometry type.");
     }
 
-    LOG_TRACE("Translating tags of size: " << t.size() << " to OSM...");
+    LOG_INFO("\n\n\nTranslating tags of size: " << t.size() << " to OSM...\n\n\n");
     _translator->translateToOsm(t, _layer->GetLayerDefn()->GetName(), geomType);
   }
   else

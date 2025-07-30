@@ -108,6 +108,7 @@ function initialize()
 // translateToOsm - takes 'attrs' and returns OSM 'tags'
 function translateToOsm(attrs, layerName, geometryType)
 {
+  print(JSON.stringify(attrs))
   // Debug
   if (renderDb.config.OgrDebugDumptags == 'true') translate.debugOutput(attrs,layerName,geometryType,'','In Attrs: ');
 
@@ -147,12 +148,24 @@ function translateToOsm(attrs, layerName, geometryType)
   ['tags','tags2','tags3','tags4','tags5'].forEach(function(tName) {
     if (attrs[tName])
     {
-      var tList = attrs[tName].split('","');
+      //print('\n\n\n')
+      not_yet_split = attrs[tName];
+      //not_yet_split = not_yet_split.replace(/.$/,'"');
+      not_yet_split = '"man_made2"=>"monitoring_station"';
+      //print(not_yet_split)
+      //var tList = attrs[tName].split('","');
+      var tList = not_yet_split.split('","');
+      //print(JSON.stringify(tName))
+      //print(attrs[tName])
+      //print(JSON.stringify(attrs))
+      //print(JSON.stringify(tList))
+      //print('\n\n\n')
       delete attrs[tName];
 
       for (var val in tList)
       {
-        vList = tList[val].split('"=>"');
+        vList = tList[val].split('\"=>\"');
+        //print(JSON.stringify(vList))
         attrs[vList[0].toString().replace('"','')] = vList[1].toString().replace('"','');
 
         // Debug

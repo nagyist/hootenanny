@@ -66,7 +66,14 @@ function getDbSchema()
 // translateToOsm - takes 'attrs' and returns OSM 'tags'
 function translateToOsm(attrs, layerName, geometryType)
 {
-  return tds71.toOsm(attrs, layerName, geometryType);
+  //hoot.logInfo('new unit');
+  //hoot.logInfo(JSON.stringify(attrs));
+  //hoot.logInfo(JSON.stringify(layerName));
+  //hoot.logInfo(JSON.stringify(geometryType));
+  returnData = tds71.toOsm(attrs, layerName, geometryType);
+  //hoot.logInfo('return data');
+  //hoot.logInfo(JSON.stringify(returnData));
+  return returnData;
 } // End of translateToOsm
 
 
@@ -74,7 +81,14 @@ function translateToOsm(attrs, layerName, geometryType)
 // translateToOgr - takes 'tags' + geometry and returns 'attrs' + tableName
 function translateToOgr(tags, elementType, geometryType)
 {
-  return tds71.toOgr(tags, elementType, geometryType);
+  //hoot.logInfo('new unit');
+  //hoot.logInfo(JSON.stringify(tags));
+  //hoot.logInfo(JSON.stringify(elementType));
+  //hoot.logInfo(JSON.stringify(geometryType));
+  returnData = tds71.toOgr(tags, elementType, geometryType);
+  //hoot.logInfo('return data');
+  //hoot.logInfo(JSON.stringify(returnData));
+  return returnData;
 } // End of translateToOgr
 
 
